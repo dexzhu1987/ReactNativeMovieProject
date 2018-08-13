@@ -6,8 +6,8 @@ import { StyleSheet, View } from 'react-native';
 export default class App extends React.Component {
   render() {
     return <View style={styles.container}>
-        <Gallery />
-        {/* <MovieDetail /> */}
+        {/*<Gallery />*/}
+        <MovieDetail />
       </View>;
   }
 }

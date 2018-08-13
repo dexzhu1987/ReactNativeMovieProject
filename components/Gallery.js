@@ -1,53 +1,59 @@
 import React, { Component } from 'react';
 import {
-  ScrollView,
   StyleSheet,
   View,
   Image,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  FlatList
 } from "react-native";
 
 export default class Gallery extends Component {
+
+  state = {
+    data: [],
+  }
+
   callDetail = () => {
     alert("Image Clicked!!!");
   }
+
+  componentWillMount() {
+    this.fetchData();
+    console.log(this.state.data.original_title)
+  }
+
+  fetchData = async () => {
+    try {
+      const response = await fetch("https://api.themoviedb.org/3/movie/popular?api_key=36221fa11cf698f1df6c74005d924451&language=en-US&page=1");
+      const json = await response.json();
+      this.setState({
+        data: json.results
+      });
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   render() {
-    return <ScrollView>
-        <View style={styles.viewContainer}>
-          <TouchableOpacity style={styles.imageGarelly} onPress={this.callDetail}>
-            <Image style={styles.movieImage} source={require("../images/image1.jpeg")} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.imageGarelly} onPress={this.callDetail}>
-            <Image style={styles.movieImage} source={require("../images/image2.jpg")} />
-          </TouchableOpacity>
-        <TouchableOpacity style={styles.imageGarelly} onPress={this.callDetail}>
-            <Image style={styles.movieImage} source={require("../images/image3.jpg")} />
-          </TouchableOpacity>
-        <TouchableOpacity style={styles.imageGarelly} onPress={this.callDetail}>
-            <Image style={styles.movieImage} source={require("../images/image4.jpg")} />
-          </TouchableOpacity>
-        <TouchableOpacity style={styles.imageGarelly} onPress={this.callDetail}>
-            <Image style={styles.movieImage} source={require("../images/image5.jpg")} />
-          </TouchableOpacity>
-        <TouchableOpacity style={styles.imageGarelly} onPress={this.callDetail}>
-            <Image style={styles.movieImage} source={require("../images/image6.jpg")} />
-          </TouchableOpacity>
-        <TouchableOpacity style={styles.imageGarelly} onPress={this.callDetail}>
-            <Image style={styles.movieImage} source={require("../images/image7.jpg")} />
-          </TouchableOpacity>
-        <TouchableOpacity style={styles.imageGarelly} onPress={this.callDetail}>
-            <Image style={styles.movieImage} source={require("../images/image8.jpg")} />
-          </TouchableOpacity>
-        <TouchableOpacity style={styles.imageGarelly} onPress={this.callDetail}>
-            <Image style={styles.movieImage} source={require("../images/image9.jpg")} />
-          </TouchableOpacity>
-        <TouchableOpacity style={styles.imageGarelly} onPress={this.callDetail}>
-            <Image style={styles.movieImage} source={require("../images/image10.jpg")} />
-          </TouchableOpacity>
-        </View>
-      </ScrollView>;
-}
+    return (
+      <View style={styles.viewContainer}>
+        <FlatList
+          numColumns={2}
+          data={this.state.data}
+          keyExtractor={(x, i) => i.toString()}
+          renderItem={({ item }) =>
+            <TouchableOpacity style={styles.imageGarelly} onPress={this.callDetail}>
+              <Image
+                style={styles.movieImage}
+                source={{ uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path }}
+              />
+            </TouchableOpacity>
+          }
+        />
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -59,11 +65,10 @@ const styles = StyleSheet.create({
   imageGarelly: {
     margin: 2,
     height: 267,
-    width: (Dimensions.get('window').width/2) - 4,
+    width: (Dimensions.get('window').width / 2) - 4,
   },
-  movieImage:{
+  movieImage: {
     flex: 1,
-    width: null ,
     alignSelf: 'stretch',
   }
 });
