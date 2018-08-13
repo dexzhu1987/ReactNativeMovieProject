@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import Gallery from './components/Gallery';
+import MovieDetail from './components/MovieDetail';
+import { StyleSheet, View } from 'react-native';
 
 export default class App extends React.Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
+    return <View style={styles.container}>
+        <Gallery />
+        {/* <MovieDetail /> */}
+      </View>;
   }
 }
 
