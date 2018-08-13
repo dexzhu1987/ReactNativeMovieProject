@@ -1,49 +1,77 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet, ScrollView, Image, Dimensions, Linking } from 'react-native'
+import React, { Component } from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  Image,
+  Dimensions,
+  Linking
+} from "react-native";
 
 export default class MovieDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      item: props.item
+    };
+  }
+
   render() {
-    return <ScrollView>
+    return (
+      <ScrollView>
         <View style={styles.detailContainer}>
           <View style={styles.titleStyle}>
-            <Text style={styles.movieTitle}> "Movie Title" </Text>
+            <Text style={styles.movieTitle}> {this.state.item.title} </Text>
           </View>
-        <View style={styles.detailTop}>
+          <View style={styles.detailTop}>
             <View style={styles.imageStyle}>
-              <Image 
-              style={styles.movieImage}
-              source={require("../images/image2.jpg")}
-              />>
+              <Image
+                style={styles.movieImage}
+                source={{
+                  uri:
+                    "https://image.tmdb.org/t/p/w500" +
+                    this.state.item.poster_path
+                }}
+              />
+              >
             </View>
             <View style={styles.imageStyle} s>
-                <Text style={styles.detailTextStyle}> Apr 2018 </Text>
-                <Text style={styles.detailTextStyle}> 120 mins </Text>
-                <Text style={styles.detailTextStyle}> 8.2/10 </Text>
-                <Text 
-                  style={styles.detailTextStyle}
-                  onPress={() => Linking.openURL('http://google.com')}> website </Text>
-              </View>
+              <Text style={styles.detailTextStyle}>
+                {" "}
+                {this.state.item.release_date}{" "}
+              </Text>
+              <Text style={styles.detailTextStyle}> 120 mins </Text>
+              <Text style={styles.detailTextStyle}>
+                {" "}
+                {this.state.item.vote_average}
+                /10{" "}
+              </Text>
+              <Text
+                style={styles.detailTextStyle}
+                onPress={() => Linking.openURL("http://google.com")}
+              >
+                {" "}
+                website{" "}
+              </Text>
+            </View>
           </View>
           <View style={styles.textbox}>
             <Text style={styles.inboxTextTitle}> Overview </Text>
             <Text style={styles.inboxtextstyle}>
-              Lorem Ipsum is simply dummy text of the printing and
-              typesetting industry. Lorem Ipsum has been the industry's
-              standard dummy text ever since the 1500s, when an unknown
-              printer took a galley of type and scrambled it to make a type
-              specimen book. It has survived not only five centuries, but
-              also the leap into electronic typesetting, remaining
-              essentially unchanged.
+              {this.state.item.overview}
             </Text>
           </View>
         </View>
-      </ScrollView>;
+      </ScrollView>
+    );
   }
 }
 
 const styles = StyleSheet.create({
   detailContainer: {
-    backgroundColor: "#000"
+    backgroundColor: "#000",
+    flex: 1
   },
   titleStyle: {
     padding: 16
@@ -74,10 +102,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     textDecorationColor: "#fff",
-    textDecorationLine: "underline",
+    textDecorationLine: "underline"
   },
   textbox: {
-    margin:8,
+    margin: 8,
     padding: 16,
     backgroundColor: "#fff",
     borderRadius: 10,
