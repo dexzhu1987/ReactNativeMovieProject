@@ -9,7 +9,7 @@ import {
   FlatList,
   Text
 } from "react-native";
-
+import { Constants } from "expo";
 import MovieDetail from "./components/MovieDetail";
 
 export default class Gallery extends Component {
@@ -79,6 +79,7 @@ export default class Gallery extends Component {
 
 const styles = StyleSheet.create({
   viewContainer: {
+    paddingTop: Constants.statusBarHeight,
     flexDirection: "row",
     flexWrap: "wrap",
     backgroundColor: "#000"

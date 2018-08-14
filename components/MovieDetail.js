@@ -9,6 +9,7 @@ import {
   Dimensions,
   Linking
 } from "react-native";
+import { Constants } from "expo";
 
 export default class MovieDetail extends Component {
   constructor(props) {
@@ -78,7 +79,8 @@ const styles = StyleSheet.create({
   detailContainer: {
     backgroundColor: "#000",
     flex: 1,
-    height: Dimensions.get("window").height
+    height: Dimensions.get("window").height,
+    paddingTop: Constants.statusBarHeight
   },
   titleStyle: {
     padding: 16
