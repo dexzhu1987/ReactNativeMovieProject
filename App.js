@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import {
-  ScrollView,
   StyleSheet,
   View,
   Image,
   Dimensions,
   TouchableOpacity,
-  FlatList,
-  Text
+  FlatList
 } from "react-native";
 import { Constants } from "expo";
 import MovieDetail from "./components/MovieDetail";
@@ -16,8 +14,11 @@ export default class Gallery extends Component {
   state = {
     data: [],
     showDetails: false,
-    item: []
+    item: [],
+    refreshing: false,
   };
+
+  page = 0;
 
   callDetail(item) {
     this.setState({
@@ -28,18 +29,23 @@ export default class Gallery extends Component {
 
   componentWillMount() {
     this.fetchData();
-    console.log(this.state.data.original_title);
   }
 
-  fetchData = async () => {
+  fetchData = async (refreshing = false) => {
+    const newPage = refreshing ? 1 : this.page + 1;
+    this.setState({ refreshing });
+
     try {
       const response = await fetch(
-        "https://api.themoviedb.org/3/movie/popular?api_key=36221fa11cf698f1df6c74005d924451&language=en-US&page=1"
+        `https://api.themoviedb.org/3/movie/popular?api_key=36221fa11cf698f1df6c74005d924451&language=en-US&page=${newPage}`
       );
       const json = await response.json();
-      this.setState({
-        data: json.results
-      });
+      this.page = newPage; 
+      if (refreshing) {
+        this.setState({  data: json.results, refreshing: false });
+      } else {
+        this.setState({data: [...this.state.data, ...json.results], refreshing: false})
+      }
     } catch (error) {
       console.error(error);
     }
@@ -57,7 +63,7 @@ export default class Gallery extends Component {
         <FlatList
           data={this.state.data}
           numColumns={2}
-          keyExtractor={(x, i) => i.toString()}
+          keyExtractor={(item) => item.movie_id}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.imageGarelly}
@@ -71,6 +77,10 @@ export default class Gallery extends Component {
               />
             </TouchableOpacity>
           )}
+          onEndReached = {() => this.fetchData()}
+          onEndReachedThreshold={0.1}
+          onRefresh={() => this.fetchData(true)}
+          refreshing={this.state.refreshing}
         />
       </View>
     );
