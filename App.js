@@ -45,8 +45,13 @@ export default class Gallery extends Component {
     }
   };
 
+  backFromChild = value => {
+    this.setState({ showDetails: value });
+  };
+
   render() {
-    if (this.state.showDetails) return <MovieDetail item={this.state.item} />;
+    if (this.state.showDetails)
+      return <MovieDetail item={this.state.item} back={this.backFromChild} />;
     return (
       <View style={styles.viewContainer}>
         <FlatList

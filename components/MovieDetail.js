@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Button,
   Text,
   View,
   StyleSheet,
@@ -16,6 +17,10 @@ export default class MovieDetail extends Component {
       item: props.item
     };
   }
+
+  backButton = () => {
+    this.props.back(false);
+  };
 
   render() {
     return (
@@ -62,6 +67,7 @@ export default class MovieDetail extends Component {
               {this.state.item.overview}
             </Text>
           </View>
+          <Button onPress={this.backButton} title="Back" color="#ffffff" />
         </View>
       </ScrollView>
     );
@@ -72,7 +78,7 @@ const styles = StyleSheet.create({
   detailContainer: {
     backgroundColor: "#000",
     flex: 1,
-    height: Dimensions.get("window").height,
+    height: Dimensions.get("window").height
   },
   titleStyle: {
     padding: 16
