@@ -71,7 +71,8 @@ export default class MovieDetail extends Component {
 const styles = StyleSheet.create({
   detailContainer: {
     backgroundColor: "#000",
-    flex: 1
+    flex: 1,
+    height: Dimensions.get("window").height,
   },
   titleStyle: {
     padding: 16

@@ -15,7 +15,7 @@ export default class Gallery extends Component {
   }
 
   callDetail = () => {
-    alert("Image Clicked!!!");
+    console.log("Image Clicked!!!");
   }
 
   componentWillMount() {
