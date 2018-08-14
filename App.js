@@ -63,7 +63,7 @@ export default class Gallery extends Component {
         <FlatList
           data={this.state.data}
           numColumns={2}
-          keyExtractor={(item) => item.movie_id}
+          keyExtractor={(x, i) => i.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.imageGarelly}
