@@ -48,8 +48,8 @@ export default class MovieDetail extends Component {
 
   render() {
     return (
-      <ScrollView>
-        <View style={styles.detailContainer}>
+      <ScrollView style={styles.detailContainer}>
+        <View>
           <View style={styles.titleStyle}>
             <Text style={styles.movieTitle}> {this.state.item.title} </Text>
           </View>
@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
   },
   inboxtextstyle: {
     color: "#000",
-    textAlign: "left"
+    textAlign: "left",
+    fontSize: 18
   }
 });
