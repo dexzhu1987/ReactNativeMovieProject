@@ -8,23 +8,24 @@ import {
   FlatList
 } from "react-native";
 import { Constants } from "expo";
-import MovieDetail from "./components/MovieDetail";
 
-export default class Gallery extends Component {
+export default class HomeScreen extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: "Home"
+    };
+  };
+
   state = {
     data: [],
-    showDetails: false,
-    item: [],
     refreshing: false
   };
 
   page = 0;
 
   callDetail(item) {
-    this.setState({
-      showDetails: true,
-      item: item
-    });
+    this.props.screenProps.showDetails(item);
+    this.props.navigation.navigate("MovieDetailsScreen");
   }
 
   componentWillMount() {
@@ -54,13 +55,7 @@ export default class Gallery extends Component {
     }
   };
 
-  backFromChild = value => {
-    this.setState({ showDetails: value });
-  };
-
   render() {
-    if (this.state.showDetails)
-      return <MovieDetail item={this.state.item} back={this.backFromChild} />;
     return (
       <View style={styles.viewContainer}>
         <FlatList
@@ -92,8 +87,8 @@ export default class Gallery extends Component {
 
 const styles = StyleSheet.create({
   viewContainer: {
-    paddingTop: Constants.statusBarHeight,
-    flexDirection: "row",
+    // paddingTop: Constants.statusBarHeight,
+    // flexDirection: "row",
     flexWrap: "wrap",
     backgroundColor: "#000"
   },

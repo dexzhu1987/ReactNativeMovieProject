@@ -11,18 +11,24 @@ import {
 } from "react-native";
 import { Constants } from "expo";
 
-export default class MovieDetail extends Component {
+export default class MovieDetailsScreen extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: "Details"
+    };
+  };
+
   constructor(props) {
     super(props);
     this.state = {
-      item: props.item,
+      item: this.props.screenProps.getItem,
       url: "",
       time: null
     };
   }
 
   backButton = () => {
-    this.props.back(false);
+    this.props.navigation.navigate("HomeScreen");
   };
 
   componentWillMount() {
@@ -102,8 +108,8 @@ const styles = StyleSheet.create({
   detailContainer: {
     backgroundColor: "#000",
     flex: 1,
-    height: Dimensions.get("window").height,
-    paddingTop: Constants.statusBarHeight
+    height: Dimensions.get("window").height
+    // paddingTop: Constants.statusBarHeight
   },
   titleStyle: {
     padding: 16
