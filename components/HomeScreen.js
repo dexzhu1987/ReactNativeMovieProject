@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Button,
   StyleSheet,
   View,
   Image,
@@ -26,6 +27,10 @@ export default class HomeScreen extends Component {
   callDetail(item) {
     this.props.screenProps.showDetails(item);
     this.props.navigation.navigate("MovieDetailsScreen");
+  }
+
+  totop() {
+    this.refs.listRef.scrollToOffset({ x: 0, y: 0, animated: true });
   }
 
   componentWillMount() {
@@ -59,6 +64,7 @@ export default class HomeScreen extends Component {
     return (
       <View style={styles.viewContainer}>
         <FlatList
+          ref="listRef"
           data={this.state.data}
           numColumns={2}
           keyExtractor={(x, i) => i.toString()}
@@ -80,6 +86,29 @@ export default class HomeScreen extends Component {
           onRefresh={() => this.fetchData(true)}
           refreshing={this.state.refreshing}
         />
+        <View
+          style={{
+            flexDirection: "row",
+            position: "absolute",
+            bottom: 30,
+            right: 30
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              borderWidth: 1,
+              borderColor: "rgba(0,0,0,0.2)",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 60,
+              height: 60,
+              backgroundColor: "#fff",
+              borderRadius: 100
+            }}
+          >
+            <Button title="Top" onPress={() => this.totop()} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
