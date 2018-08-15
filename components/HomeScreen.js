@@ -86,26 +86,8 @@ export default class HomeScreen extends Component {
           onRefresh={() => this.fetchData(true)}
           refreshing={this.state.refreshing}
         />
-        <View
-          style={{
-            flexDirection: "row",
-            position: "absolute",
-            bottom: 30,
-            right: 30
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              borderWidth: 1,
-              borderColor: "rgba(0,0,0,0.2)",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 60,
-              height: 60,
-              backgroundColor: "#fff",
-              borderRadius: 100
-            }}
-          >
+        <View style={styles.topButtonView}>
+          <TouchableOpacity style={styles.topButtonTouch}>
             <Button title="Top" onPress={() => this.totop()} />
           </TouchableOpacity>
         </View>
@@ -129,5 +111,21 @@ const styles = StyleSheet.create({
   movieImage: {
     flex: 1,
     alignSelf: "stretch"
+  },
+  topButtonView: {
+    flexDirection: "row",
+    position: "absolute",
+    bottom: 30,
+    right: 30
+  },
+  topButtonTouch: {
+    borderWidth: 1,
+    borderColor: "rgba(0,0,0,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 60,
+    height: 60,
+    backgroundColor: "#fff",
+    borderRadius: 100
   }
 });
