@@ -15,13 +15,36 @@ export default class MovieDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: props.item
+      item: props.item,
+      url: '',
+      time: null,
     };
   }
 
   backButton = () => {
     this.props.back(false);
   };
+
+  componentWillMount() {
+    this.fetchData();
+  }
+
+  fetchData = async (refreshing = false) => {
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${+this.state.item.id}?api_key=36221fa11cf698f1df6c74005d924451&language=en-US`
+      );
+      const json = await response.json();
+
+      this.setState({
+        url: json.homepage,
+        time: json.runtime
+      });
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   render() {
     return (
@@ -42,23 +65,20 @@ export default class MovieDetail extends Component {
               />
               >
             </View>
-            <View style={styles.imageStyle} s>
+            <View style={styles.imageStyle}>
               <Text style={styles.detailTextStyle}>
-                {" "}
-                {this.state.item.release_date}{" "}
+                {this.state.item.release_date}
               </Text>
-              <Text style={styles.detailTextStyle}> 120 mins </Text>
+              <Text style={styles.detailTextStyle}> {this.state.time} mins </Text>
               <Text style={styles.detailTextStyle}>
-                {" "}
                 {this.state.item.vote_average}
-                /10{" "}
+                /10
               </Text>
               <Text
                 style={styles.detailTextStyle}
-                onPress={() => Linking.openURL("http://google.com")}
+                onPress={() => Linking.openURL(this.state.url)}
               >
-                {" "}
-                website{" "}
+                website
               </Text>
             </View>
           </View>
